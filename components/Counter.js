@@ -10,10 +10,10 @@ export default class Counter {
       ".todo__completed:checked",
     );
 
-    const Y = allTodos.length;
-    const X = completedTodos.length;
+    const listTotal = allTodos.length;
+    const listChecked = completedTodos.length;
 
-    this._counter.textContent = `Showing ${X} out of ${Y} completed`;
+    this._counter.textContent = `Showing ${listChecked} out of ${listTotal} completed`;
   }
 
   setEventListeners() {
