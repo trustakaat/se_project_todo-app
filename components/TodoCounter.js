@@ -23,11 +23,6 @@ export default class TodoCounter {
       }
     });
 
-    const firstCheckbox = this._list.querySelector(".todo__completed");
-    if (firstCheckbox) {
-      firstCheckbox.checked = true;
-    }
-
     this.update();
   }
 }

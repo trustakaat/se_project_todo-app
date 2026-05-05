@@ -7,11 +7,7 @@ import TodoCounter from "../components/TodoCounter.js";
 import FormValidator from "../components/FormValidator.js";
 
 const addTodoButton = document.querySelector(".button_action_add");
-const addTodoPopup = document.querySelector("#add-todo-popup");
-const addTodoForm = addTodoPopup.querySelector(".popup__form");
-const addTodoCloseBtn = addTodoPopup.querySelector(".popup__close");
-const todoTemplate = document.querySelector("#todo-template");
-const todosList = document.querySelector(".todos__list");
+const addTodoForm = document.querySelector(".popup__form");
 
 const counter = new TodoCounter({
   listSelector: ".todos__list",
@@ -20,15 +16,17 @@ const counter = new TodoCounter({
 
 counter.setEventListeners();
 
+const todoFormValidator = new FormValidator(validationConfig, addTodoForm);
+todoFormValidator._enableValidation();
+
 const generateTodo = (data) => {
   const todo = new Todo(data, "#todo-template", () => counter.update());
-
   return todo.getView();
 };
 
-const handleFormSubmit = (evt) => {
-  const name = evt.target.name.value;
-  const dateInput = evt.target.date.value;
+const handleFormSubmit = (formValues) => {
+  const name = formValues.name;
+  const dateInput = formValues.date;
 
   const date = new Date(dateInput);
   date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
@@ -37,12 +35,16 @@ const handleFormSubmit = (evt) => {
   const values = { name, date, id };
 
   const todo = generateTodo(values);
-  todosList.append(todo);
+  section.addItem(todo);
+  counter.update();
 
   addTodoForm.reset();
   todoFormValidator.resetValidation();
 };
+
 const popupWithForm = new PopupWithForm("#add-todo-popup", handleFormSubmit);
+
+initialTodos[0].completed = true;
 
 const section = new Section({
   items: initialTodos,
@@ -52,11 +54,7 @@ const section = new Section({
 
 section.renderItems();
 counter.update();
+
 popupWithForm.setEventListeners();
 
-const todoFormValidator = new FormValidator(validationConfig, addTodoForm);
-todoFormValidator._enableValidation();
-
-addTodoButton.addEventListener("click", () => {
-  popupWithForm.open();
-});
+addTodoButton.addEventListener("click", () => popupWithForm.open());

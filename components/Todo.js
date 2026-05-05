@@ -1,14 +1,13 @@
 class Todo {
   constructor(data, selector, handleUpdateCounter) {
     this._data = data;
-    this._selector = document.querySelector(selector);
+    this._templateEl = document.querySelector(selector); // renamed
     this._handleUpdateCounter = handleUpdateCounter;
   }
 
   _setEventListeners() {
     this.todoCheckboxEl.addEventListener("change", () => {
       this._data.completed = this.todoCheckboxEl.checked;
-
       if (this._handleUpdateCounter) {
         this._handleUpdateCounter();
       }
@@ -16,7 +15,6 @@ class Todo {
 
     this.todoDeleteBtn.addEventListener("click", () => {
       this._todoElement.remove();
-
       if (this._handleUpdateCounter) {
         this._handleUpdateCounter();
       }
@@ -28,13 +26,12 @@ class Todo {
     this.todoLabel = this._todoElement.querySelector(".todo__label");
 
     this.todoCheckboxEl.checked = this._data.completed;
-
     this.todoCheckboxEl.id = `todo-${this._data.id}`;
     this.todoLabel.setAttribute("for", `todo-${this._data.id}`);
   }
 
   getView() {
-    this._todoElement = this._selector.content
+    this._todoElement = this._templateEl.content // renamed
       .querySelector(".todo")
       .cloneNode(true);
 
