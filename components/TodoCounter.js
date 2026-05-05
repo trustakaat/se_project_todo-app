@@ -1,4 +1,4 @@
-export default class Counter {
+export default class TodoCounter {
   constructor({ listSelector, counterSelector }) {
     this._list = document.querySelector(listSelector);
     this._counter = document.querySelector(counterSelector);
@@ -22,5 +22,12 @@ export default class Counter {
         this.update();
       }
     });
+
+    const firstCheckbox = this._list.querySelector(".todo__completed");
+    if (firstCheckbox) {
+      firstCheckbox.checked = true;
+    }
+
+    this.update();
   }
 }

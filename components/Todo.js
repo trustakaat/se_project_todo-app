@@ -28,6 +28,7 @@ class Todo {
     this.todoLabel = this._todoElement.querySelector(".todo__label");
 
     this.todoCheckboxEl.checked = this._data.completed;
+
     this.todoCheckboxEl.id = `todo-${this._data.id}`;
     this.todoLabel.setAttribute("for", `todo-${this._data.id}`);
   }
