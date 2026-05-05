@@ -50,7 +50,6 @@ const section = new Section({
   containerSelector: ".todos__list",
 });
 
-initialTodos[0].completed = true;
 section.renderItems();
 counter.update();
 popupWithForm.setEventListeners();
